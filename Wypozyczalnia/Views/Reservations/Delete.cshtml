@@ -1,0 +1,30 @@
+﻿@model Wypozyczalnia.Models.Reservation
+@{
+    ViewData["Title"] = "Usuń rezerwację";
+}
+
+<h1>Usuń rezerwację</h1>
+
+<h3>Czy na pewno chcesz usunąć tę rezerwację?</h3>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Sprzęt</dt>
+        <dd class="col-sm-10">@Model.EquipmentItem?.Name</dd>
+
+        <dt class="col-sm-2">Użytkownik</dt>
+        <dd class="col-sm-10">@Model.ApplicationUserId</dd>
+
+        <dt class="col-sm-2">Od</dt>
+        <dd class="col-sm-10">@Model.From.ToShortDateString()</dd>
+
+        <dt class="col-sm-2">Do</dt>
+        <dd class="col-sm-10">@Model.To.ToShortDateString()</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Usuń</button>
+    <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+</form>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Wypozyczalnia.Models.Reservation>
+@{
+    ViewData["Title"] = "Rezerwacje";
+}
+<h1>Rezerwacje</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sprzęt</th>
+            <th>Użytkownik</th>
+            <th>Od</th>
+            <th>Do</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.EquipmentItem?.Name</td>
+                <td>@r.ApplicationUserId</td>
+                <td>@r.From.ToShortDateString()</td>
+                <td>@r.To.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@r.Id">Szczegóły</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <text> | <a asp-action="Edit" asp-route-id="@r.Id">Edytuj</a> | <a asp-action="Delete" asp-route-id="@r.Id">Usuń</a></text>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,38 @@
+﻿@model Wypozyczalnia.Models.Reservation
+@{
+    ViewData["Title"] = "Nowa rezerwacja";
+    var equipmentItems = ViewData["EquipmentItems"] as List<Wypozyczalnia.Models.EquipmentItem>;
+    var selectedId = ViewData["SelectedEquipmentId"] as int?;
+}
+<h1>Nowa rezerwacja</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="EquipmentItemId" class="form-label">Sprzęt</label>
+        @{
+            var equipmentItems = ViewData["EquipmentItems"] as List<Wypozyczalnia.Models.EquipmentItem> ?? new List<Wypozyczalnia.Models.EquipmentItem>();
+            var selectList = new SelectList(equipmentItems, "Id", "Name", Model?.EquipmentItemId);
+        }
+        <select asp-for="EquipmentItemId" asp-items="selectList" class="form-select"></select>
+        <span asp-validation-for="EquipmentItemId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="From" class="form-label"></label>
+        <input asp-for="From" class="form-control" type="date" />
+        <span asp-validation-for="From" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="To" class="form-label"></label>
+        <input asp-for="To" class="form-control" type="date" />
+        <span asp-validation-for="To" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zarezerwuj</button>
+    <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

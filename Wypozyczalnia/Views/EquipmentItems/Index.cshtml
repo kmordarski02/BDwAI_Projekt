@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Wypozyczalnia.Models.EquipmentItem>
+@{
+    ViewData["Title"] = "Lista sprzętu";
+}
+<h1>Lista sprzętu</h1>
+
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Create" class="btn btn-primary">Dodaj nowy sprzęt</a>
+    }
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Kategoria</th>
+            <th>Sezon</th>
+            <th>Ilość</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Category?.Name</td>
+                <td>@item.Season</td>
+                <td>@item.Quantity</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <text> | <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> | <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a></text>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

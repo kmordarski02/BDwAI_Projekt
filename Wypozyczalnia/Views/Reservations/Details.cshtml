@@ -1,0 +1,20 @@
+﻿@model Wypozyczalnia.Models.Reservation
+@{
+    ViewData["Title"] = "Szczegóły rezerwacji";
+}
+<h1>Szczegóły rezerwacji</h1>
+
+<dl class="row">
+    <dt class="col-sm-2">Sprzęt</dt>
+    <dd class="col-sm-10">@Model.EquipmentItem?.Name</dd>
+    <dt class="col-sm-2">Użytkownik</dt>
+    <dd class="col-sm-10">@Model.ApplicationUserId</dd>
+    <dt class="col-sm-2">Od</dt>
+    <dd class="col-sm-10">@Model.From.ToShortDateString()</dd>
+    <dt class="col-sm-2">Do</dt>
+    <dd class="col-sm-10">@Model.To.ToShortDateString()</dd>
+</dl>
+
+<p>
+    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+</p>
