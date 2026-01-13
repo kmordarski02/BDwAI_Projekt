@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Właściciel\\source\\repos\\Wypozyczalnia\\Wypozyczalnia\\Wypozyczalnia.csproj": {}
+    "C:\\Users\\Kuba\\.gemini\\antigravity\\scratch\\BDwAI_Projekt\\Wypozyczalnia\\Wypozyczalnia.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Właściciel\\source\\repos\\Wypozyczalnia\\Wypozyczalnia\\Wypozyczalnia.csproj": {
+    "C:\\Users\\Kuba\\.gemini\\antigravity\\scratch\\BDwAI_Projekt\\Wypozyczalnia\\Wypozyczalnia.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Właściciel\\source\\repos\\Wypozyczalnia\\Wypozyczalnia\\Wypozyczalnia.csproj",
+        "projectUniqueName": "C:\\Users\\Kuba\\.gemini\\antigravity\\scratch\\BDwAI_Projekt\\Wypozyczalnia\\Wypozyczalnia.csproj",
         "projectName": "Wypozyczalnia",
-        "projectPath": "C:\\Users\\Właściciel\\source\\repos\\Wypozyczalnia\\Wypozyczalnia\\Wypozyczalnia.csproj",
-        "packagesPath": "C:\\Users\\Właściciel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Właściciel\\source\\repos\\Wypozyczalnia\\Wypozyczalnia\\obj\\",
+        "projectPath": "C:\\Users\\Kuba\\.gemini\\antigravity\\scratch\\BDwAI_Projekt\\Wypozyczalnia\\Wypozyczalnia.csproj",
+        "packagesPath": "C:\\Users\\Kuba\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Kuba\\.gemini\\antigravity\\scratch\\BDwAI_Projekt\\Wypozyczalnia\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Właściciel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Kuba\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -92,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

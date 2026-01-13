@@ -1,31 +1,195 @@
-html {
-  font-size: 14px;
+:root {
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-primary: #3b82f6;
+  --accent-secondary: #8b5cf6;
+  --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --font-main: 'Outfit', sans-serif;
+  --radius-lg: 16px;
+  --radius-md: 8px;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
+html,
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  height: 100%;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-secondary);
+}
+
+/* Navbar - Glassmorphism */
+.custom-nav {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  font-weight: 800;
+  font-size: 1.6rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+}
+
+.nav-link {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9) !important;
+  /* Made brighter */
+  opacity: 1;
+  /* Removed opacity reduction */
+  transition: color 0.2s ease, transform 0.2s ease;
+  margin: 0 5px;
+}
+
+.nav-link:hover {
+  color: var(--accent-primary) !important;
+  transform: translateY(-1px);
+  text-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--glass-border) !important;
+  color: var(--text-muted) !important;
+  padding: 20px 0;
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: var(--text-muted);
+}
+
+.footer a:hover {
+  color: var(--accent-primary);
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--accent-gradient);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px 24px;
+  font-weight: 600;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Cards / Containers */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  color: var(--text-main);
+}
+
+/* Tables - For Subpages/Lists */
+.table {
+  color: var(--text-main);
+  border-color: var(--glass-border);
+}
+
+.table> :not(caption)>*>* {
+  background-color: transparent;
+  color: var(--text-main);
+  border-bottom-color: var(--glass-border);
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+  color: var(--text-main);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.table-hover>tbody>tr:hover>* {
+  color: white;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+main.pb-3 {
+  animation: fadeInUp 0.8s ease-out forwards;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/* Forms & Inputs */
+.form-control {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  border-radius: var(--radius-md);
 }
 
-body {
-  margin-bottom: 60px;
+.form-control:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 2px var(--accent-primary);
+  border-color: transparent;
+  color: white;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Identity / Forms Extra */
+.form-check-label {
+  color: var(--text-main);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.text-body {
+  color: var(--text-muted) !important;
+}
+
+h1,
+h2,
+h3 {
+  color: white !important;
 }
