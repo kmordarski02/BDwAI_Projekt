@@ -16,6 +16,9 @@
         <tr>
             <th>Nazwa</th>
             <th>Kategoria</th>
+            <th>Płeć</th>
+            <th>Rozmiar</th>
+            <th>Cena/dzień</th>
             <th>Sezon</th>
             <th>Ilość</th>
             <th></th>
@@ -27,6 +30,9 @@
             <tr>
                 <td>@item.Name</td>
                 <td>@item.Category?.Name</td>
+                <td>@item.TargetGender</td>
+                <td>@item.Size</td>
+                <td>@item.PricePerDay.ToString("C")</td>
                 <td>@item.Season</td>
                 <td>@item.Quantity</td>
                 <td>

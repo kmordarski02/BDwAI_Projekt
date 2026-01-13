@@ -50,61 +50,66 @@ namespace Wypozyczalnia.Controllers
         }
 
         // POST: Reservations/Create
+        // POST: Reservations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Reservation reservation)
+        public async Task<IActionResult> Create([Bind("EquipmentItemId,From,To")] Reservation reservation)
         {
-            // ModelState validation
-            if (!ModelState.IsValid)
-            {
-                ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
-                return View(reservation);
-            }
-
-            // Date validation
-            if (reservation.From >= reservation.To)
-            {
-                ModelState.AddModelError(string.Empty, "Data zakończenia musi być późniejsza niż data rozpoczęcia.");
-                ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
-                return View(reservation);
-            }
-
-            // Ensure equipment exists
-            var equipment = await _context.EquipmentItems.FindAsync(reservation.EquipmentItemId);
-            if (equipment == null)
-            {
-                ModelState.AddModelError(string.Empty, "Wybrany sprzęt nie istnieje.");
-                ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
-                return View(reservation);
-            }
-
-            // Check overlapping reservations
-            var overlappingReservations = await _context.Reservations
-                .Where(r => r.EquipmentItemId == reservation.EquipmentItemId &&
-                            r.From < reservation.To && reservation.From < r.To)
-                .ToListAsync();
-
-            if (overlappingReservations.Count >= equipment.Quantity)
-            {
-                ModelState.AddModelError(string.Empty, "Brak dostępności sprzętu w wybranym terminie.");
-                ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
-                return View(reservation);
-            }
-
-            // Get current user safely
+            // 1. Get current user
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Nie można pobrać informacji o użytkowniku. Zaloguj się ponownie.");
-                ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
-                return View(reservation);
+                return Challenge();
             }
-
             reservation.ApplicationUserId = user.Id;
 
-            _context.Reservations.Add(reservation);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            // Remove errors for properties we set manually or ignore
+            ModelState.Remove(nameof(Reservation.ApplicationUserId));
+            ModelState.Remove(nameof(Reservation.TotalPrice));
+            ModelState.Remove(nameof(Reservation.EquipmentItem));
+            ModelState.Remove(nameof(Reservation.ApplicationUser));
+
+            // 2. Validate Dates
+            if (reservation.From >= reservation.To)
+            {
+                ModelState.AddModelError("To", "Data zwrotu musi być późniejsza niż data wypożyczenia.");
+            }
+
+            // 3. Get Equipment and Validate Existence
+            var equipment = await _context.EquipmentItems.FindAsync(reservation.EquipmentItemId);
+            if (equipment == null)
+            {
+                ModelState.AddModelError("EquipmentItemId", "Wybrany sprzęt nie istnieje.");
+            }
+
+            if (ModelState.IsValid && equipment != null)
+            {
+                // 4. Check Availability (Overlapping)
+                var overlappingReservationsCount = await _context.Reservations
+                    .Where(r => r.EquipmentItemId == reservation.EquipmentItemId &&
+                                r.From < reservation.To && reservation.From < r.To)
+                    .CountAsync();
+
+                if (overlappingReservationsCount >= equipment.Quantity)
+                {
+                    ModelState.AddModelError(string.Empty, "Brak dostępności sprzętu w wybranym terminie.");
+                }
+                else
+                {
+                    // 5. Calculate Total Price
+                    var days = (reservation.To - reservation.From).Days;
+                    reservation.TotalPrice = days * equipment.PricePerDay;
+
+                    // 6. Save
+                    _context.Add(reservation);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
+            // If we got here, something failed
+            ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
+            return View(reservation);
         }
 
 

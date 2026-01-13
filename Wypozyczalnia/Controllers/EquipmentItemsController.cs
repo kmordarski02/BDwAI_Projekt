@@ -55,7 +55,7 @@ namespace Wypozyczalnia.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Name,Season,Quantity,CategoryId")] EquipmentItem equipmentItem)
+        public async Task<IActionResult> Create([Bind("Name,Season,Quantity,CategoryId,TargetGender,Size,PricePerDay")] EquipmentItem equipmentItem)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace Wypozyczalnia.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Season,Quantity,CategoryId")] EquipmentItem equipmentItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Season,Quantity,CategoryId,TargetGender,Size,PricePerDay")] EquipmentItem equipmentItem)
         {
             if (id != equipmentItem.Id) return NotFound();
             if (ModelState.IsValid)

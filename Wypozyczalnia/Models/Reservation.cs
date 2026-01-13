@@ -20,5 +20,8 @@ namespace Wypozyczalnia.Models
 
         [Required, DataType(DataType.Date)]
         public DateTime To { get; set; }
+
+        [DataType(DataType.Currency)]
+        public decimal TotalPrice { get; set; }
     }
 }

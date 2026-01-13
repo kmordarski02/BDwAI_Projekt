@@ -11,6 +11,7 @@
             <th>Użytkownik</th>
             <th>Od</th>
             <th>Do</th>
+            <th>Cena całkowita</th>
             <th></th>
         </tr>
     </thead>
@@ -22,6 +23,7 @@
                 <td>@r.ApplicationUserId</td>
                 <td>@r.From.ToShortDateString()</td>
                 <td>@r.To.ToShortDateString()</td>
+                <td>@r.TotalPrice.ToString("C")</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@r.Id">Szczegóły</a>
                     @if (User.IsInRole("Admin"))
