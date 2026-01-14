@@ -8,24 +8,31 @@ namespace Wypozyczalnia.Models
         public int Id { get; set; }
 
         [Required, StringLength(150)]
+        [Display(Name = "Nazwa")]
         public string Name { get; set; } = string.Empty;
 
         [Required, StringLength(50)]
-        public string Season { get; set; } = string.Empty; // "Summer", "Winter", "AllYear"
+        [Display(Name = "Sezon")]
+        public string Season { get; set; } = string.Empty; // "Letni", "Zimowy", "Całoroczny"
 
         [Required, Range(0, 1000)]
+        [Display(Name = "Ilość")]
         public int Quantity { get; set; }
 
         [Required]
+        [Display(Name = "Płeć / Przeznaczenie")]
         public TargetGender TargetGender { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "Rozmiar")]
         public string Size { get; set; } = string.Empty; // "42", "L", "180cm"
 
         [Required, Range(0, 10000), DataType(DataType.Currency)]
-        public decimal PricePerDay { get; set; }
+        [Display(Name = "Cena za godzinę")]
+        public decimal PricePerHour { get; set; }
 
         [Required]
+        [Display(Name = "Kategoria")]
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
 

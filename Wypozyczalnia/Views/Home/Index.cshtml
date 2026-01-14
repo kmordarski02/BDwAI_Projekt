@@ -1,8 +1,76 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Strona Główna";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Twoja Przygoda Zaczyna Się Tutaj</h1>
+        <p class="hero-subtitle">Najlepszy sprzęt sportowy na każdą porę roku. Rowery, kajaki, narty i wiele więcej w zasięgu Twojej ręki.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-controller="EquipmentItems" asp-action="Index" class="btn btn-primary btn-lg">Zobacz Sprzęt</a>
+            <a href="#categories" class="btn btn-outline-light btn-lg" style="border-radius: var(--radius-md); padding: 10px 24px;">Nasze Kategorie</a>
+        </div>
+    </div>
+</div>
+
+<div id="categories" class="container py-5">
+    <h2 class="section-title">Wybierz Swoją Dyscyplinę</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="category-card" onclick="location.href='@Url.Action("Index", "EquipmentItems")'">
+                <div class="category-icon">🚴‍♂️</div>
+                <h3>Letnie</h3>
+                <p>Rowery górskie, miejskie. Odkryj nowe szlaki już dziś.</p>
+                <span class="text-primary fw-bold">Sprawdź →</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="category-card" onclick="location.href='@Url.Action("Index", "EquipmentItems")'">
+                <div class="category-icon">🛶</div>
+                <h3>Wodne</h3>
+                <p>Kajaki, deski SUP i pontony. Wszystko czego potrzebujesz na wodzie.</p>
+                <span class="text-primary fw-bold">Sprawdź →</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="category-card" onclick="location.href='@Url.Action("Index", "EquipmentItems")'">
+                <div class="category-icon">⛷️</div>
+                <h3>Zimowe</h3>
+                <p>Narty, snowboardy i odzież zimowa. Przygotuj się na stok.</p>
+                <span class="text-primary fw-bold">Sprawdź →</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+            <h2 class="mb-4">Dlaczego My?</h2>
+            <div class="d-flex flex-column gap-3">
+                <div class="feature-box">
+                    <h4 class="text-primary">✨ Sprzęt Premium</h4>
+                    <p class="mb-0">Oferujemy wyłącznie produkty od renomowanych producentów, regularnie serwisowane i gotowe do akcji.</p>
+                </div>
+                <div class="feature-box">
+                    <h4 class="text-primary">⚡ Szybka Rezerwacja</h4>
+                    <p class="mb-0">Zarezerwuj sprzęt online w kilka minut i odbierz go w naszym punkcie bez stania w kolejkach.</p>
+                </div>
+                <div class="feature-box">
+                    <h4 class="text-primary">💰 Świetne Ceny</h4>
+                    <p class="mb-0">Wynajmij na godzinę, dzień lub nawet cały tydzień.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card p-4" style="background: var(--glass-bg); backdrop-filter: blur(10px);">
+                <h3>Zacznij Już Teraz</h3>
+                <p>Dołącz do setek zadowolonych sportowców i ciesz się aktywnym wypoczynkiem bez zbędnych kosztów zakupu własnego sprzętu.</p>
+                <hr class="border-light opacity-25">
+                <div class="d-grid">
+                    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary">Załóż Darmowe Konto</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

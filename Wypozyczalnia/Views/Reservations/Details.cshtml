@@ -10,11 +10,19 @@
     <dt class="col-sm-2">Użytkownik</dt>
     <dd class="col-sm-10">@Model.ApplicationUserId</dd>
     <dt class="col-sm-2">Od</dt>
-    <dd class="col-sm-10">@Model.From.ToShortDateString()</dd>
+    <dd class="col-sm-10">@Model.From.ToString("g")</dd>
     <dt class="col-sm-2">Do</dt>
-    <dd class="col-sm-10">@Model.To.ToShortDateString()</dd>
+    <dd class="col-sm-10">@Model.To.ToString("g")</dd>
     <dt class="col-sm-2">Cena całkowita</dt>
-    <dd class="col-sm-10">@Model.TotalPrice.ToString("C")</dd>
+    <dd class="col-sm-10">
+        @Model.TotalPrice.ToString("C")
+        @if (Model.IsStudent)
+        {
+            var basePrice = Model.TotalPrice / 0.8m;
+            var discount = basePrice - Model.TotalPrice;
+            <span class="text-success">(-@discount.ToString("C"))</span>
+        }
+    </dd>
 </dl>
 
 <p>

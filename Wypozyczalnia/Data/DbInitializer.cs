@@ -65,7 +65,7 @@ namespace Wypozyczalnia.Data
             {
                 var categories = new List<Category>
                 {
-                    new Category { Name = "Rowerowy" },
+                    new Category { Name = "Rowery" },
                     new Category { Name = "Wodne" },
                     new Category { Name = "Hulajnogi i rolki" },
                     new Category { Name = "Aktywny wypoczynek" },
@@ -76,8 +76,7 @@ namespace Wypozyczalnia.Data
                 context.Categories.AddRange(categories);
                 await context.SaveChangesAsync();
 
-                // Get IDs (reload from DB to be safely consistent)
-                var bikeCat = await context.Categories.FirstAsync(c => c.Name == "Rowerowy");
+                var bikeCat = await context.Categories.FirstAsync(c => c.Name == "Rowery");
                 var winterCat = await context.Categories.FirstAsync(c => c.Name == "Zimowy - Narciarski");
                 var boardCat = await context.Categories.FirstAsync(c => c.Name == "Zimowy - Snowboard");
                 var waterCat = await context.Categories.FirstAsync(c => c.Name == "Wodne");
@@ -85,16 +84,16 @@ namespace Wypozyczalnia.Data
                 var items = new List<EquipmentItem>
                 {
                     // Rowerowy
-                    new EquipmentItem { Name = "Rower Górski MTB", CategoryId = bikeCat.Id, Season = "Summer", Quantity = 5, PricePerDay = 50, TargetGender = TargetGender.Unisex, Size = "L" },
-                    new EquipmentItem { Name = "Rower Miejski", CategoryId = bikeCat.Id, Season = "Summer", Quantity = 3, PricePerDay = 40, TargetGender = TargetGender.Female, Size = "M" },
+                    new EquipmentItem { Name = "Rower Górski MTB", CategoryId = bikeCat.Id, Season = "Letni", Quantity = 5, PricePerHour = 15, TargetGender = TargetGender.Unisex, Size = "L" },
+                    new EquipmentItem { Name = "Rower Miejski", CategoryId = bikeCat.Id, Season = "Letni", Quantity = 3, PricePerHour = 10, TargetGender = TargetGender.Kobieta, Size = "M" },
                     
                     // Wodne
-                    new EquipmentItem { Name = "Kajak dwuosobowy", CategoryId = waterCat.Id, Season = "Summer", Quantity = 2, PricePerDay = 80, TargetGender = TargetGender.Unisex, Size = "Double" },
+                    new EquipmentItem { Name = "Kajak dwuosobowy", CategoryId = waterCat.Id, Season = "Letni", Quantity = 2, PricePerHour = 25, TargetGender = TargetGender.Unisex, Size = "Double" },
 
                     // Zima
-                    new EquipmentItem { Name = "Narty Zjazdowe Rossignol", CategoryId = winterCat.Id, Season = "Winter", Quantity = 10, PricePerDay = 60, TargetGender = TargetGender.Unisex, Size = "170cm" },
-                    new EquipmentItem { Name = "Deska Snowboardowa Burton", CategoryId = boardCat.Id, Season = "Winter", Quantity = 4, PricePerDay = 70, TargetGender = TargetGender.Male, Size = "155cm" },
-                    new EquipmentItem { Name = "Buty Narciarskie", CategoryId = winterCat.Id, Season = "Winter", Quantity = 10, PricePerDay = 30, TargetGender = TargetGender.Unisex, Size = "42" }
+                    new EquipmentItem { Name = "Narty Zjazdowe Rossignol", CategoryId = winterCat.Id, Season = "Zimowy", Quantity = 10, PricePerHour = 20, TargetGender = TargetGender.Unisex, Size = "170cm" },
+                    new EquipmentItem { Name = "Deska Snowboardowa Burton", CategoryId = boardCat.Id, Season = "Zimowy", Quantity = 4, PricePerHour = 25, TargetGender = TargetGender.Mężczyzna, Size = "155cm" },
+                    new EquipmentItem { Name = "Buty Narciarskie", CategoryId = winterCat.Id, Season = "Zimowy", Quantity = 10, PricePerHour = 10, TargetGender = TargetGender.Unisex, Size = "42" }
                 };
 
                 context.EquipmentItems.AddRange(items);

@@ -21,14 +21,25 @@
 
     <div class="mb-3">
         <label asp-for="From" class="form-label"></label>
-        <input asp-for="From" class="form-control" type="date" />
+        <input asp-for="From" class="form-control" type="datetime-local" />
         <span asp-validation-for="From" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="To" class="form-label"></label>
-        <input asp-for="To" class="form-control" type="date" />
+        <input asp-for="To" class="form-control" type="datetime-local" />
         <span asp-validation-for="To" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3 form-check">
+        <input asp-for="IsStudent" class="form-check-input" id="isStudentCheckbox" />
+        <label asp-for="IsStudent" class="form-check-label"></label>
+    </div>
+
+    <div class="mb-3" id="studentEmailGroup" style="display: none;">
+        <label asp-for="StudentEmail" class="form-label"></label>
+        <input asp-for="StudentEmail" class="form-control" placeholder="np. imie.nazwisko@student.pwr.edu.pl" />
+        <span asp-validation-for="StudentEmail" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Zapisz</button>
@@ -39,4 +50,17 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('isStudentCheckbox');
+            const emailGroup = document.getElementById('studentEmailGroup');
+            
+            function toggleEmail() {
+                emailGroup.style.display = checkbox.checked ? 'block' : 'none';
+            }
+            
+            checkbox.addEventListener('change', toggleEmail);
+            toggleEmail(); // Initial state
+        });
+    </script>
 }

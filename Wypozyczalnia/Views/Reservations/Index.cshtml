@@ -21,9 +21,17 @@
             <tr>
                 <td>@r.EquipmentItem?.Name</td>
                 <td>@r.ApplicationUserId</td>
-                <td>@r.From.ToShortDateString()</td>
-                <td>@r.To.ToShortDateString()</td>
-                <td>@r.TotalPrice.ToString("C")</td>
+                <td>@r.From.ToString("g")</td>
+                <td>@r.To.ToString("g")</td>
+                <td>
+                    @r.TotalPrice.ToString("C")
+                    @if (r.IsStudent)
+                    {
+                        var basePrice = r.TotalPrice / 0.8m;
+                        var discount = basePrice - r.TotalPrice;
+                        <small class="text-success">(-@discount.ToString("C"))</small>
+                    }
+                </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@r.Id">Szczegóły</a>
                     @if (User.IsInRole("Admin"))

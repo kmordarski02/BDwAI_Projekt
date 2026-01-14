@@ -53,7 +53,7 @@ namespace Wypozyczalnia.Controllers
         // POST: Reservations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EquipmentItemId,From,To")] Reservation reservation)
+        public async Task<IActionResult> Create([Bind("EquipmentItemId,From,To,IsStudent,StudentEmail")] Reservation reservation)
         {
             // 1. Get current user
             var user = await _userManager.GetUserAsync(User);
@@ -73,6 +73,23 @@ namespace Wypozyczalnia.Controllers
             if (reservation.From >= reservation.To)
             {
                 ModelState.AddModelError("To", "Data zwrotu musi być późniejsza niż data wypożyczenia.");
+            }
+
+            // 2. Validate Student Checkbox and Email
+            if (reservation.IsStudent)
+            {
+                if (string.IsNullOrWhiteSpace(reservation.StudentEmail))
+                {
+                    ModelState.AddModelError("StudentEmail", "Mail studencki jest wymagany gdy zaznaczono opcję studenta.");
+                }
+                else
+                {
+                    var emailParts = reservation.StudentEmail.Split('@');
+                    if (emailParts.Length < 2 || !emailParts[1].Contains("student", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ModelState.AddModelError("StudentEmail", "Domena maila musi zawierać słowo 'student'.");
+                    }
+                }
             }
 
             // 3. Get Equipment and Validate Existence
@@ -97,8 +114,17 @@ namespace Wypozyczalnia.Controllers
                 else
                 {
                     // 5. Calculate Total Price
-                    var days = (reservation.To - reservation.From).Days;
-                    reservation.TotalPrice = days * equipment.PricePerDay;
+                    var totalHours = (decimal)(reservation.To - reservation.From).TotalHours;
+                    var basePrice = totalHours * equipment.PricePerHour;
+                    
+                    if (reservation.IsStudent)
+                    {
+                        reservation.TotalPrice = basePrice * 0.8m; // 20% discount
+                    }
+                    else
+                    {
+                        reservation.TotalPrice = basePrice;
+                    }
 
                     // 6. Save
                     _context.Add(reservation);
@@ -140,9 +166,31 @@ namespace Wypozyczalnia.Controllers
 
             if (reservation.From >= reservation.To)
             {
-                ModelState.AddModelError(string.Empty, "Data zakończenia musi być późniejsza niż data rozpoczęcia.");
+                ModelState.AddModelError(string.Empty, "Data i godzina zakończenia musi być późniejsza niż data rozpoczęcia.");
                 ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
                 return View(reservation);
+            }
+
+            // Student Validation for Edit
+            if (reservation.IsStudent)
+            {
+                if (string.IsNullOrWhiteSpace(reservation.StudentEmail))
+                {
+                    ModelState.AddModelError("StudentEmail", "Mail studencki jest wymagany gdy zaznaczono opcję studenta.");
+                }
+                else
+                {
+                    var emailParts = reservation.StudentEmail.Split('@');
+                    if (emailParts.Length < 2 || !emailParts[1].Contains("student", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ModelState.AddModelError("StudentEmail", "Domena maila musi zawierać słowo 'student'.");
+                    }
+                }
+                if (ModelState.ErrorCount > 0)
+                {
+                    ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
+                    return View(reservation);
+                }
             }
 
             var equipment = await _context.EquipmentItems.FindAsync(reservation.EquipmentItemId);
@@ -164,6 +212,18 @@ namespace Wypozyczalnia.Controllers
                 ModelState.AddModelError(string.Empty, "Brak dostępności sprzętu w wybranym terminie.");
                 ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
                 return View(reservation);
+            }
+
+            // 5. Calculate Total Price (Recalculate on Edit)
+            var totalHoursOnEdit = (decimal)(reservation.To - reservation.From).TotalHours;
+            var basePriceOnEdit = totalHoursOnEdit * equipment.PricePerHour;
+            if (reservation.IsStudent)
+            {
+                reservation.TotalPrice = basePriceOnEdit * 0.8m;
+            }
+            else
+            {
+                reservation.TotalPrice = basePriceOnEdit;
             }
 
             try
