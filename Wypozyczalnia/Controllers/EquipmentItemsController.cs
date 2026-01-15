@@ -25,10 +25,23 @@ namespace Wypozyczalnia.Controllers
         }
 
         // GET: EquipmentItems
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? season, string? category)
         {
             PopulateViewData();
-            var items = _context.EquipmentItems.Include(e => e.Category);
+            
+            var items = _context.EquipmentItems.Include(e => e.Category).AsQueryable();
+
+            if (!string.IsNullOrEmpty(season))
+            {
+                items = items.Where(i => i.Season == season);
+                ViewData["CurrentSeason"] = season;
+            }
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                items = items.Where(i => i.Category.Name == category);
+            }
+
             return View(await items.ToListAsync());
         }
 
@@ -55,7 +68,7 @@ namespace Wypozyczalnia.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Name,Season,Quantity,CategoryId,TargetGender,Size,PricePerDay")] EquipmentItem equipmentItem)
+        public async Task<IActionResult> Create([Bind("Name,Season,Quantity,CategoryId,TargetGender,Size,PricePerHour")] EquipmentItem equipmentItem)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +95,7 @@ namespace Wypozyczalnia.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Season,Quantity,CategoryId,TargetGender,Size,PricePerDay")] EquipmentItem equipmentItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Season,Quantity,CategoryId,TargetGender,Size,PricePerHour")] EquipmentItem equipmentItem)
         {
             if (id != equipmentItem.Id) return NotFound();
             if (ModelState.IsValid)

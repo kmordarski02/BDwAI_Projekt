@@ -4,6 +4,14 @@
 }
 <h1>Lista sprzętu</h1>
 
+<div class="mb-3">
+    <div class="btn-group" role="group">
+        <a asp-action="Index" class="btn @(ViewData["CurrentSeason"] == null ? "btn-primary" : "btn-outline-primary")">Wszystkie</a>
+        <a asp-action="Index" asp-route-season="Letni" class="btn @(Convert.ToString(ViewData["CurrentSeason"]) == "Letni" ? "btn-primary" : "btn-outline-primary")">Lato</a>
+        <a asp-action="Index" asp-route-season="Zimowy" class="btn @(Convert.ToString(ViewData["CurrentSeason"]) == "Zimowy" ? "btn-primary" : "btn-outline-primary")">Zima</a>
+    </div>
+</div>
+
 <p>
     @if (User.IsInRole("Admin"))
     {

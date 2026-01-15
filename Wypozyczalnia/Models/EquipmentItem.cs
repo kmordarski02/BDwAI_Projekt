@@ -13,7 +13,7 @@ namespace Wypozyczalnia.Models
 
         [Required, StringLength(50)]
         [Display(Name = "Sezon")]
-        public string Season { get; set; } = string.Empty; // "Letni", "Zimowy", "Całoroczny"
+        public string Season { get; set; } = string.Empty; 
 
         [Required, Range(0, 1000)]
         [Display(Name = "Ilość")]
@@ -25,7 +25,7 @@ namespace Wypozyczalnia.Models
 
         [StringLength(50)]
         [Display(Name = "Rozmiar")]
-        public string Size { get; set; } = string.Empty; // "42", "L", "180cm"
+        public string Size { get; set; } = string.Empty; 
 
         [Required, Range(0, 10000), DataType(DataType.Currency)]
         [Display(Name = "Cena za godzinę")]
