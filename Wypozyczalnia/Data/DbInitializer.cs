@@ -60,6 +60,19 @@ namespace Wypozyczalnia.Data
                 }
             }
 
+            // 3b. Student User (Test Account)
+            var studentEmail = "student@student.pl";
+            var studentUser = await userManager.FindByEmailAsync(studentEmail);
+            if (studentUser == null)
+            {
+                studentUser = new ApplicationUser { UserName = studentEmail, Email = studentEmail, FullName = "Student Testowy", EmailConfirmed = true };
+                var result = await userManager.CreateAsync(studentUser, "Student123!");
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(studentUser, "User");
+                }
+            }
+
             // 4. Categories
             var categories = new[]
             {

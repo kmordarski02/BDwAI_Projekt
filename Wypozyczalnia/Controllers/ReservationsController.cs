@@ -109,7 +109,7 @@ namespace Wypozyczalnia.Controllers
 
                 if (overlappingReservationsCount >= equipment.Quantity)
                 {
-                    ModelState.AddModelError(string.Empty, "Brak dostępności sprzętu w wybranym terminie.");
+                    ModelState.AddModelError(string.Empty, "W podanym terminie wybrany sprzęt nie jest dostępny, ponieważ wszystkie sztuki zostały już wypożyczone.");
                 }
                 else
                 {
@@ -209,7 +209,7 @@ namespace Wypozyczalnia.Controllers
 
             if (overlappingReservations.Count >= equipment.Quantity)
             {
-                ModelState.AddModelError(string.Empty, "Brak dostępności sprzętu w wybranym terminie.");
+                ModelState.AddModelError(string.Empty, "W podanym terminie wybrany sprzęt nie jest dostępny, ponieważ wszystkie sztuki zostały już wypożyczone.");
                 ViewData["EquipmentItems"] = _context.EquipmentItems.ToList();
                 return View(reservation);
             }
